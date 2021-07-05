@@ -3,7 +3,8 @@
 #define SDL_MAIN_HANDLED
 #define SDL_S
 #define WINREN_S
-#include "../headers/local/Headers.hpp"
+#define TEX_S
+#include "../include/local/Headers.hpp"
 
 // Screen constants
 const int SCREEN_WIDTH = 640;
@@ -11,18 +12,20 @@ const int SCREEN_HEIGHT = 480;
 
 // Functions
 bool Init();
-bool LoadMedia();
+bool LoadMedia(SDL_Renderer* pRenderer);
 void Close();
+
+// Global variables
+Texture gImageTexture;
 
 int main(int argv, char** args){
     WindowRenderer display("Pacman clone", SCREEN_WIDTH, SCREEN_HEIGHT);
-
 
     if (!Init()){
         std::cerr << "Initialization function doesn't work" << std::endl;
     }
     else {
-        if (!LoadMedia()){
+        if (!LoadMedia(display.renderer)){
             std::cerr << "Loading Media function doesn't work" << std::endl;
         }
     }
@@ -44,6 +47,9 @@ int main(int argv, char** args){
         SDL_SetRenderDrawColor(display.renderer, 0, 0, 0, 255);
         SDL_RenderClear(display.renderer);
 
+        // Render the image
+        gImageTexture.Render((SCREEN_WIDTH - gImageTexture.GetWidth()) / 2, (SCREEN_HEIGHT - gImageTexture.GetHeight()) / 2, display.renderer);
+
         // Present what is rendered to screen
         SDL_RenderPresent(display.renderer);
     }
@@ -63,13 +69,18 @@ bool Init(){
     return success;
 }
 
-bool LoadMedia(){
+bool LoadMedia(SDL_Renderer* pRenderer){
     bool success = true;
+
+    if (!gImageTexture.LoadFromFile("images/pacman_01.png", pRenderer)){
+        std::cerr << "Pacman_01.png failed to load" << std::endl;
+        success = false;
+    }
 
     return success;
 }
 
 void Close(){
-
+    gImageTexture.Free();
     SDL_Quit();
 }

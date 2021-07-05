@@ -1,4 +1,4 @@
-#include "../headers/local/WindowRenderer.hpp"
+#include "../include/local/WindowRenderer.hpp"
 
 
 WindowRenderer::WindowRenderer(const char* p_title, int p_width, int p_height){
