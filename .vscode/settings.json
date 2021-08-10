@@ -38,5 +38,7 @@
         "xstring": "cpp",
         "xtr1common": "cpp",
         "xutility": "cpp"
-    }
+    },
+    "workbench.editor.limit.enabled": true,
+    "C_Cpp.errorSquiggles": "Enabled"
 }

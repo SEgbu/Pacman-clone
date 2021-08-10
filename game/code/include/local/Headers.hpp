@@ -33,4 +33,28 @@
         #include "../include/local/Texture.hpp"
     #endif
 
+    #ifdef PLAYER_H
+        #include "Player.hpp"
+    #endif
+
+    #ifdef PLAYER_S
+        #include "../include/local/Player.hpp"
+    #endif
+
+    #ifdef ENTITY_H
+        #include "Entity.hpp"
+    #endif
+
+    #ifdef ENTITY_S
+        #include "../include/local/Entity.hpp"
+    #endif
+
+    #ifdef TIMER_H
+        #include "Timer.hpp"
+    #endif
+
+    #ifdef TIMER_S
+        #include "../include/local/Timer.hpp"
+    #endif
+
 #endif

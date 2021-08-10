@@ -67,9 +67,10 @@ bool Texture::LoadFromFile(std::string path, SDL_Renderer* pRenderer){
     return mTexture != nullptr;
 }
 
-void Texture::Render(int x, int y, SDL_Renderer* pRenderer, SDL_Rect* clip, double enlargement){
-    SDL_Rect renderArea = {x, y, mWidth * enlargement, mHeight * enlargement};
-    SDL_RenderCopy(pRenderer, mTexture, clip, &renderArea);
+void Texture::Render(int x, int y, SDL_Renderer* pRenderer, SDL_Rect* clip, double angle,
+                     SDL_Point* centre, SDL_RendererFlip flip, double enlargement){
+    SDL_Rect renderArea = {x, y, mWidth * (int)enlargement, mHeight * (int)enlargement};
+    SDL_RenderCopyEx(pRenderer, mTexture, clip, &renderArea, angle, centre, flip);
 }
 
 int Texture::GetWidth(){
