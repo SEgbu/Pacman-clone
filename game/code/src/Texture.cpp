@@ -18,7 +18,7 @@ void Texture::Free(){
     }
 }
 
-bool Texture::LoadFromFile(std::string path, SDL_Renderer* pRenderer){
+bool Texture::LoadFromFile(std::string path, SDL_Renderer* pRenderer, bool isColourKey, std::uint_fast32_t r, std::uint_fast32_t g, std::uint_fast32_t b){
     // Deallocate just in case
     Free();
 
@@ -45,6 +45,11 @@ bool Texture::LoadFromFile(std::string path, SDL_Renderer* pRenderer){
     SDL_Surface* imageSurface = SDL_CreateRGBSurfaceWithFormatFrom(static_cast<void*>(imageSurfaceData), width, height, depth, pitch, pixel_format);
     if (imageSurface == nullptr){
         std::cerr << "Image Surface couldn't be created from Image Surface Data, SDL error function: " << SDL_GetError() << std::endl;
+    }
+    else {
+        if (isColourKey){
+            SDL_SetColorKey(imageSurface, SDL_TRUE, SDL_MapRGB(imageSurface->format, r, g, b));
+        }
     }
 
     // Put imageSurface onto imageTexture

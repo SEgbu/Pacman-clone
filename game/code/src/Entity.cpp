@@ -5,11 +5,11 @@ Entity::Entity(){
     mPosY = 0;
 }
 
-float Entity::GetX(){
+int Entity::GetX(){
     return mPosX;
 }
 
-float Entity::GetY(){
+int Entity::GetY(){
     return mPosY;
 }
 

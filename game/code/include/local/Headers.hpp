@@ -57,4 +57,12 @@
         #include "../include/local/Timer.hpp"
     #endif
 
+    #ifdef TESTMAP_H
+        #include "TestMap.hpp"
+    #endif
+
+    #ifdef TESTMAP_S
+        #include "../include/local/TestMap.hpp"
+    #endif
+
 #endif

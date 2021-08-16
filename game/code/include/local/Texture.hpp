@@ -11,7 +11,7 @@
 class Texture{
     public:
         Texture();
-        bool LoadFromFile(std::string path, SDL_Renderer* pRenderer);
+        bool LoadFromFile(std::string path, SDL_Renderer* pRenderer, bool isColourKey = false, std::uint_fast32_t r = 0, std::uint_fast32_t g = 0, std::uint_fast32_t b = 0);
         void Render(int x, int y, SDL_Renderer* pRenderer, SDL_Rect* clip = nullptr, double angle = 0.0f, 
                     SDL_Point* centre = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE, double enlargement = 1.0f);
         void Free();

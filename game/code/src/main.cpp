@@ -5,6 +5,7 @@
 #define WINREN_S
 #define TEX_S
 #define PLAYER_S
+#define TESTMAP_S
 #define TIMER_S
 #include "../include/local/Headers.hpp"
 
@@ -33,7 +34,7 @@ int main(int argv, char** args){
     bool quit = false;
     SDL_Event e;
     Player pacman((SCREEN_WIDTH) / 2, (SCREEN_HEIGHT) / 2, display.renderer);
-    Timer timer;
+    TestMap map(((SCREEN_WIDTH) / 2) - 1, ((SCREEN_HEIGHT) / 2) - 1, display.renderer);
 
     while (!quit){
         if (SDL_PollEvent(&e) != 0){
@@ -46,19 +47,17 @@ int main(int argv, char** args){
                 pacman.HandleEvents(e);
         }
 
-        float timeStep = timer.GetTicks() / 1000.0f;
 
         // Move pacman
-        pacman.Move(SCREEN_WIDTH, SCREEN_HEIGHT, timeStep);
-
-        timer.Start();
+        pacman.Move(SCREEN_WIDTH, SCREEN_HEIGHT, map.GetCollider());
 
         // Clear the prevaious frame with the render colour
         SDL_SetRenderDrawColor(display.renderer, 0, 0, 0, 255);
         SDL_RenderClear(display.renderer);
 
-        // Render Pacman
+        // Render things
         pacman.Render();
+        map.Render();
 
         // Present what is rendered to screen
         SDL_RenderPresent(display.renderer);

@@ -100,30 +100,21 @@ void Player::HandleEvents(SDL_Event& e){
     }
 }
 
-void Player::Move(int screenWidth, int screenHeight, float timeStep){
-    SetX(GetX() + (mVelX * timeStep));
-    mColliderRect.x = GetX();
-    
-    if (GetX() < 0){
-        SetX(0);
+void Player::Move(int screenWidth, int screenHeight, SDL_Rect otherCollider){
+        SetX(GetX() + mVelX);
         mColliderRect.x = GetX();
-    }
-    else if (GetX() + PLAYER_WIDTH > screenWidth){
-        SetX(screenWidth - PLAYER_WIDTH);
-        mColliderRect.x = GetX();
-    }
+        
+        if (GetX() < 0 || GetX() + PLAYER_WIDTH > screenWidth || CheckCollision(otherCollider)){
+            SetX(GetX() - mVelX);
+        }
 
-    SetY(GetY() + (mVelY * timeStep));
-    mColliderRect.y = GetY();
+        SetY(GetY() + mVelY);
+        mColliderRect.y = GetY();
 
-    if (GetY() < 0){
-        SetY(0);
-        mColliderRect.y = GetY();
-    }
-    else if (GetY() + PLAYER_HEIGHT > screenHeight){
-        SetY(screenHeight - PLAYER_HEIGHT);
-        mColliderRect.y = GetY();
-    }
+        if (GetY() < 0 || GetY() + PLAYER_HEIGHT > screenHeight || CheckCollision(otherCollider)){
+            SetY(GetY() - mVelY);
+        }
+
 }
 
 void Player::Render(){
@@ -142,4 +133,38 @@ void Player::Render(){
     else {
         mTexture.Render((int)GetX(), (int)GetY(), GetRenderer(), nullptr, 0.0f);
     }
+}
+
+bool Player::CheckCollision(SDL_Rect& b){
+    int topA, topB;
+    int bottomA, bottomB;
+    int leftA, leftB;
+    int rightA, rightB;
+
+    topA = mColliderRect.y;
+    bottomA = mColliderRect.y + mColliderRect.h;
+    leftA = mColliderRect.x;
+    rightA = mColliderRect.x + mColliderRect.w;
+    
+    topB = b.y;
+    bottomB = b.y + b.h;
+    leftB = b.x;
+    rightB = b.x + b.w;
+
+    if (bottomA <= topB + 16){
+        return true;
+    }
+    
+    if (bottomB <= topA + 16){
+        return true;
+    }
+    if (leftA >= rightB - 16){
+        return true;
+    }
+    
+    if (rightA <= leftB + 16){
+        return true;
+    }
+    
+    return false;
 }

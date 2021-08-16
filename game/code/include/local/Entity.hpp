@@ -7,8 +7,8 @@
 class Entity{
     public:
         Entity();
-        float GetX();
-        float GetY();
+        int GetX();
+        int GetY();
         SDL_Renderer* GetRenderer();
         void SetX(int pPosX);
         void SetY(int pPosY);
