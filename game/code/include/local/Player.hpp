@@ -5,6 +5,7 @@
 #include "Entity.hpp"
 #include "Texture.hpp"
 #include <iostream>
+#include <vector>
 
 class Player : public Entity{
     public:
@@ -15,10 +16,11 @@ class Player : public Entity{
         Player(int x, int y, SDL_Renderer* renderer);
         void HandleEvents(SDL_Event& e);
         void Move(int screenWidth, int screenHeight, SDL_Rect otherCollider);
-        void Render();
+        void Render(int time, int secondsPerFrame);
         bool CheckCollision(SDL_Rect& b);
+        ~Player();
     private:
-        Texture mTexture;
+        Texture mTexture[2];
         SDL_Rect mColliderRect;
         int mVelX, mVelY;
 };                          

@@ -85,3 +85,7 @@ int Texture::GetWidth(){
 int Texture::GetHeight(){
     return mHeight;
 }
+
+SDL_Texture* Texture::GetTexture(){
+    return mTexture;
+}

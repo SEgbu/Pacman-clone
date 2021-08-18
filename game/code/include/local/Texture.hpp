@@ -17,6 +17,7 @@ class Texture{
         void Free();
         int GetWidth();
         int GetHeight();
+        SDL_Texture* GetTexture();
         ~Texture();
     private:
         int mWidth, mHeight;

@@ -7,8 +7,13 @@ Player::Player(int x, int y, SDL_Renderer* renderer){
     mVelX = 0;
     mVelY = 0;
     SetRenderer(renderer);
-    if (!mTexture.LoadFromFile("images/pacman_01.png", GetRenderer())){
+    if (!mTexture[0].LoadFromFile("images/pacman_01.png", GetRenderer())){
         std::cerr << "Could not load pacman_01.png" << std::endl;
+    }
+    else {
+        if (!mTexture[1].LoadFromFile("images/pacman_02.png", GetRenderer())){
+            std::cout << "Could not load pacman_02.png" << std::endl;
+        }
     }
 }
 
@@ -117,21 +122,41 @@ void Player::Move(int screenWidth, int screenHeight, SDL_Rect otherCollider){
 
 }
 
-void Player::Render(){
+void Player::Render(int time, int secondsPerFrame){
     if (mVelX > 0){
-        mTexture.Render((int)GetX(), (int)GetY(), GetRenderer(), nullptr, 0.0f);
+        if (time % secondsPerFrame == 0){
+            mTexture[0].Render(GetX(), GetY(), GetRenderer(), nullptr, 0.0f);
+        }
+        else { 
+            mTexture[1].Render(GetX(), GetY(), GetRenderer());
+        }
     }
     else if (mVelX < 0){
-        mTexture.Render((int)GetX(), (int)GetY(), GetRenderer(), nullptr, 0.0f, nullptr, SDL_FLIP_HORIZONTAL);
+        if (time % secondsPerFrame == 0){
+            mTexture[0].Render(GetX(), GetY(), GetRenderer(), nullptr, 0.0f, nullptr, SDL_FLIP_HORIZONTAL);
+        }
+        else { 
+            mTexture[1].Render(GetX(), GetY(), GetRenderer());
+        }
     }
     else if (mVelY > 0){
-        mTexture.Render((int)GetX(), (int)GetY(), GetRenderer(), nullptr, 90.0f);
+        if (time % secondsPerFrame == 0){
+            mTexture[0].Render(GetX(), GetY(), GetRenderer(), nullptr, 90.0f);
+        }
+        else { 
+            mTexture[1].Render(GetX(), GetY(), GetRenderer());
+        }
     }
     else if (mVelY < 0){
-        mTexture.Render((int)GetX(), (int)GetY(), GetRenderer(), nullptr, 270.0f);
+        if (time % secondsPerFrame == 0){
+            mTexture[0].Render(GetX(), GetY(), GetRenderer(), nullptr, 270.0f);
+        }
+        else {
+            mTexture[1].Render(GetX(), GetY(), GetRenderer());
+        }
     }
-    else {
-        mTexture.Render((int)GetX(), (int)GetY(), GetRenderer(), nullptr, 0.0f);
+    else if (mVelX == 0) {
+            mTexture[0].Render(GetX(), GetY(), GetRenderer(), nullptr, 0.0f);
     }
 }
 
@@ -167,4 +192,9 @@ bool Player::CheckCollision(SDL_Rect& b){
     }
     
     return false;
+}
+
+Player::~Player(){
+    if (mTexture->GetTexture() != nullptr)
+        mTexture->Free();
 }

@@ -17,6 +17,14 @@
         #include "../include/external/stb_image/stb_image.h"
     #endif
 
+    #ifdef MIX_H
+        #include "../external/SDL2/SDL_mixer.h"
+    #endif
+
+    #ifdef MIX_S
+        #include "../include/external/SDL2/SDL_mixer.h"
+    #endif
+
     #ifdef WINREN_H
         #include "WindowRenderer.hpp"
     #endif

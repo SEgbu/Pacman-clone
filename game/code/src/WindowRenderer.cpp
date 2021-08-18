@@ -10,7 +10,7 @@ WindowRenderer::WindowRenderer(const char* p_title, int p_width, int p_height){
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
         if (renderer == nullptr){
             std::cerr << "Renderer couldn't initialize, SDL error function: " << SDL_GetError() << std::endl;
-        }  
+        }
     }
 }
 
