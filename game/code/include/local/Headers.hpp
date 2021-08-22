@@ -57,6 +57,14 @@
         #include "../include/local/Entity.hpp"
     #endif
 
+    #ifdef MUSIC_H
+        #include "Music.hpp"
+    #endif
+
+    #ifdef MUSIC_S
+        #include "../include/local/Music.hpp"
+    #endif
+
     #ifdef TIMER_H
         #include "Timer.hpp"
     #endif

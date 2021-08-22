@@ -7,6 +7,7 @@
 #define PLAYER_S
 #define TESTMAP_S
 #define MIX_S
+#define MUSIC_S
 #define TIMER_S
 #include "../include/local/Headers.hpp"
 
@@ -16,18 +17,18 @@ const int SCREEN_HEIGHT = 480;
 
 // Functions
 bool Init();
-bool LoadMedia(SDL_Renderer* pRenderer, Mix_Music** music00);
-void Close(Mix_Music* music00);
+bool LoadMedia(SDL_Renderer* pRenderer, Music& music);
+void Close();
 
 int main(int argv, char** args){
     WindowRenderer display("Pacman clone", SCREEN_WIDTH, SCREEN_HEIGHT);
-    Mix_Music* ChillMusic = nullptr;
+    Music pacmanMusic;
 
     if (!Init()){
         std::cerr << "Initialization function doesn't work" << std::endl;
     }
     else {
-        if (!LoadMedia(display.renderer, &ChillMusic)){
+       if (!LoadMedia(display.renderer, pacmanMusic)){
             std::cerr << "Loading Media function doesn't work" << std::endl;
         }
     }
@@ -39,7 +40,8 @@ int main(int argv, char** args){
     TestMap map(((SCREEN_WIDTH) / 2) - 1, ((SCREEN_HEIGHT) / 2) - 1, display.renderer);
     Timer time;
     time.Start();
-    Mix_PlayMusic(ChillMusic, 1);
+    Mix_VolumeMusic(30);
+    pacmanMusic.Play(1);
 
     while (!quit){
         if (SDL_PollEvent(&e) != 0){
@@ -70,7 +72,7 @@ int main(int argv, char** args){
         SDL_RenderPresent(display.renderer);
     }
 
-    Close(ChillMusic);
+    Close();
     return 0;
 }
 
@@ -91,20 +93,18 @@ bool Init(){
     return success;
 }
 
-bool LoadMedia(SDL_Renderer* pRenderer, Mix_Music** music00){
+bool LoadMedia(SDL_Renderer* pRenderer, Music& music){
     bool success = true;
 
-    *music00 = Mix_LoadMUS("audio/pacman_beginning.wav"); 
-    if (*music00 == nullptr){
-        std::cerr << "Failed to load ChillMusic.wav, Mix error function: " << Mix_GetError() << std::endl;
+    if (!music.LoadMusic("audio/pacman_beginning.wav")){
+        std::cerr << "Failed to load pacman_beginning.wav" << std::endl;
         success = false;
     }
 
     return success;
 }
 
-void Close(Mix_Music* music00){
-    Mix_FreeMusic(music00);
+void Close(){
     SDL_Quit();
     Mix_Quit();
 }
