@@ -9,7 +9,10 @@
 #define MIX_S
 #define MUSIC_S
 #define TIMER_S
+#define DOT_S
+#define SCORE_S
 #include "../include/local/Headers.hpp"
+#include "../include/external/SDL2/SDL_ttf.h"
 
 // Screen constants
 const int SCREEN_WIDTH = 640;
@@ -28,7 +31,7 @@ int main(int argv, char** args){
         std::cerr << "Initialization function doesn't work" << std::endl;
     }
     else {
-       if (!LoadMedia(display.renderer, pacmanMusic)){
+    if (!LoadMedia(display.renderer, pacmanMusic)){
             std::cerr << "Loading Media function doesn't work" << std::endl;
         }
     }
@@ -38,7 +41,14 @@ int main(int argv, char** args){
     SDL_Event e;
     Player pacman((SCREEN_WIDTH) / 2, (SCREEN_HEIGHT) / 2, display.renderer);
     TestMap map(((SCREEN_WIDTH) / 2) - 1, ((SCREEN_HEIGHT) / 2) - 1, display.renderer);
+    int DotX = map.GetX() + map.GetTexture().GetWidth() - 8;
+    int DotY = map.GetY() + map.GetTexture().GetHeight() - 8;
+    int Dot2X = DotX - 20;
+    int Dot2Y = DotY;
     Timer time;
+    Dot dot(DotX, DotY, display.renderer);
+    Dot dot2(Dot2X, Dot2Y, display.renderer);
+    Score score;
     time.Start();
     Mix_VolumeMusic(30);
     pacmanMusic.Play(1);
@@ -57,16 +67,26 @@ int main(int argv, char** args){
 
         // Move pacman
         pacman.Move(SCREEN_WIDTH, SCREEN_HEIGHT, map.GetCollider());
-
         // Clear the prevaious frame with the render colour
         SDL_SetRenderDrawColor(display.renderer, 0, 0, 0, 255);
         SDL_RenderClear(display.renderer);
 
         int IntTime = static_cast<int>(time.GetTicks() / 1000.0f);
 
+        // // Print score
+        // std::cout << dot.GetDotScore() << std::endl;
+
+        // If collided update score by 10
+        if (dot.OnDotCollision(pacman.GetCollider()) || dot2.OnDotCollision(pacman.GetCollider())){
+            score.SetScore(dot.GetDotScore());
+        }
+
         // Render things
-        pacman.Render(IntTime, 2);
+        score.Render(0, 0, display.renderer);
         map.Render();
+        pacman.Render(IntTime, 2);
+        dot.Render();
+        dot2.Render();
 
         // Present what is rendered to screen
         SDL_RenderPresent(display.renderer);
@@ -89,6 +109,11 @@ bool Init(){
         std::cerr << "Failed to initialize SDL_Mixer, Mix error function: " << Mix_GetError() << std::endl;
         success = false;
     } 
+
+    if (TTF_Init() < 0){
+        std::cerr << "Failed to initialize SDL_TTF, TTF error function: " << TTF_GetError() << std::endl;
+        success = false;
+    }
 
     return success;
 }

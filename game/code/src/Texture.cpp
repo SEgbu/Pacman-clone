@@ -72,6 +72,32 @@ bool Texture::LoadFromFile(std::string path, SDL_Renderer* pRenderer, bool isCol
     return mTexture != nullptr;
 }
 
+bool Texture::LoadFromRenderedText(std::string text, SDL_Color colour, TTF_Font* pFont, SDL_Renderer* pRenderer){
+    // Deallocate just in case
+    Free();
+    // Make surface from text, colour and font
+    SDL_Surface* textSurface = TTF_RenderText_Blended(pFont, text.c_str(), colour);
+    if (textSurface == nullptr){
+        std::cerr << "textSurface couldn't load from rendered text, TTF error function: " << TTF_GetError() << std::endl;
+    }
+    else {
+        // Put surface on texture
+        mTexture = SDL_CreateTextureFromSurface(pRenderer, textSurface);
+        if (mTexture == nullptr){
+            std::cerr << "mTexture couldn't be created from textSurface, SDL error function: " << SDL_GetError << std::endl;
+        }
+
+        // Make width and height of surface = mWidth and mHeight
+        mWidth = textSurface->w;
+        mHeight = textSurface->h;
+    }
+
+    // Free the useless surface 
+    SDL_FreeSurface(textSurface);
+
+    return mTexture != nullptr;  
+}
+
 void Texture::Render(int x, int y, SDL_Renderer* pRenderer, SDL_Rect* clip, double angle,
                      SDL_Point* centre, SDL_RendererFlip flip, double enlargement){
     SDL_Rect renderArea = {x, y, mWidth * (int)enlargement, mHeight * (int)enlargement};
@@ -88,4 +114,10 @@ int Texture::GetHeight(){
 
 SDL_Texture* Texture::GetTexture(){
     return mTexture;
+}
+
+void Texture::NullTexture(bool isNull){
+    if (isNull) {
+        mTexture = nullptr;
+    }
 }

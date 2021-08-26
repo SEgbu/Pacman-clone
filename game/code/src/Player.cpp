@@ -99,9 +99,6 @@ void Player::HandleEvents(SDL_Event& e){
                 mVelY = -PLAYER_VEL;
             }
         }
-
-        std::cout << "mVelX: " << mVelX << std::endl;
-        std::cout << "mVelY: " << mVelY << std::endl;
     }
 }
 
@@ -192,6 +189,10 @@ bool Player::CheckCollision(SDL_Rect& b){
     }
     
     return false;
+}
+
+SDL_Rect Player::GetCollider(){
+    return mColliderRect;
 }
 
 Player::~Player(){

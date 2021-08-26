@@ -9,6 +9,7 @@ class TestMap : public Entity {
     public:
         TestMap(int x, int y, SDL_Renderer* renderer);
         SDL_Rect GetCollider();
+        Texture GetTexture();
         void Render();
     private:
         Texture mTexture;

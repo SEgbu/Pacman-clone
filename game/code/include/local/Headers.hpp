@@ -81,4 +81,20 @@
         #include "../include/local/TestMap.hpp"
     #endif
 
+    #ifdef DOT_S
+        #include "../include/local/Dot.hpp"
+    #endif
+
+    #ifdef DOT_H
+        #include "Dot.hpp"
+    #endif
+
+    #ifdef SCORE_S
+        #include "../include/local/Score.hpp"
+    #endif
+
+    #ifdef SCORE_H
+        #include "Score.hpp"
+    #endif
+
 #endif

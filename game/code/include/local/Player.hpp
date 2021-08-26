@@ -18,6 +18,7 @@ class Player : public Entity{
         void Move(int screenWidth, int screenHeight, SDL_Rect otherCollider);
         void Render(int time, int secondsPerFrame);
         bool CheckCollision(SDL_Rect& b);
+        SDL_Rect GetCollider();
         ~Player();
     private:
         Texture mTexture[2];

@@ -14,6 +14,10 @@ SDL_Rect TestMap::GetCollider(){
     return mColliderRect;
 }
 
+Texture TestMap::GetTexture(){
+    return mTexture;
+}
+
 void TestMap::Render(){
     mTexture.Render(GetX(), GetY(), GetRenderer());
 }
