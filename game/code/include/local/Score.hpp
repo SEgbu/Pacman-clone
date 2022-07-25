@@ -12,6 +12,8 @@ class Score {
         int GetScore();
         void SetScore(int score);
         void Render(int x, int y, SDL_Renderer* renderer);
+        int GetScoreHeight();
+        int GetScoreWidth();
         ~Score();
     private:
         int mScore;

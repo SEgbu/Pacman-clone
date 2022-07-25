@@ -82,7 +82,7 @@ int main(int argv, char** args){
         }
 
         // Render things
-        score.Render(0, 0, display.renderer);
+        score.Render(0, SCREEN_HEIGHT - score.GetScoreHeight(), display.renderer);
         map.Render();
         pacman.Render(IntTime, 2);
         dot.Render();

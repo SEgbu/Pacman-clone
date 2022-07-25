@@ -10,8 +10,8 @@
 class Player : public Entity{
     public:
         static const int PLAYER_VEL = 2;
-        static const int PLAYER_WIDTH = 16;
-        static const int PLAYER_HEIGHT = 16;
+        static const int PLAYER_WIDTH = 12;
+        static const int PLAYER_HEIGHT = 12;
 
         Player(int x, int y, SDL_Renderer* renderer);
         void HandleEvents(SDL_Event& e);

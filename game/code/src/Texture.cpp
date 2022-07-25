@@ -100,7 +100,7 @@ bool Texture::LoadFromRenderedText(std::string text, SDL_Color colour, TTF_Font*
 
 void Texture::Render(int x, int y, SDL_Renderer* pRenderer, SDL_Rect* clip, double angle,
                      SDL_Point* centre, SDL_RendererFlip flip, double enlargement){
-    SDL_Rect renderArea = {x, y, mWidth * (int)enlargement, mHeight * (int)enlargement};
+    SDL_Rect renderArea = {x, y, mWidth * enlargement, mHeight * enlargement};
     SDL_RenderCopyEx(pRenderer, mTexture, clip, &renderArea, angle, centre, flip);
 }
 

@@ -122,38 +122,38 @@ void Player::Move(int screenWidth, int screenHeight, SDL_Rect otherCollider){
 void Player::Render(int time, int secondsPerFrame){
     if (mVelX > 0){
         if (time % secondsPerFrame == 0){
-            mTexture[0].Render(GetX(), GetY(), GetRenderer(), nullptr, 0.0f);
+            mTexture[0].Render(GetX(), GetY(), GetRenderer(), nullptr, 0.0f, 0, SDL_FLIP_NONE, 0.75);
         }
         else { 
-            mTexture[1].Render(GetX(), GetY(), GetRenderer());
+            mTexture[1].Render(GetX(), GetY(), GetRenderer(), nullptr, 0.0f, 0, SDL_FLIP_NONE, 0.75);
         }
     }
     else if (mVelX < 0){
         if (time % secondsPerFrame == 0){
-            mTexture[0].Render(GetX(), GetY(), GetRenderer(), nullptr, 0.0f, nullptr, SDL_FLIP_HORIZONTAL);
+            mTexture[0].Render(GetX(), GetY(), GetRenderer(), nullptr, 0.0f, nullptr, SDL_FLIP_HORIZONTAL, 0.75);
         }
         else { 
-            mTexture[1].Render(GetX(), GetY(), GetRenderer());
+            mTexture[1].Render(GetX(), GetY(), GetRenderer(), nullptr, 0.0f, nullptr, SDL_FLIP_NONE, 0.75);
         }
     }
     else if (mVelY > 0){
         if (time % secondsPerFrame == 0){
-            mTexture[0].Render(GetX(), GetY(), GetRenderer(), nullptr, 90.0f);
+            mTexture[0].Render(GetX(), GetY(), GetRenderer(), nullptr, 90.0f, 0, SDL_FLIP_NONE, 0.75);
         }
         else { 
-            mTexture[1].Render(GetX(), GetY(), GetRenderer());
+            mTexture[1].Render(GetX(), GetY(), GetRenderer(), nullptr, 0.0f, 0, SDL_FLIP_NONE, 0.75);
         }
     }
     else if (mVelY < 0){
         if (time % secondsPerFrame == 0){
-            mTexture[0].Render(GetX(), GetY(), GetRenderer(), nullptr, 270.0f);
+            mTexture[0].Render(GetX(), GetY(), GetRenderer(), nullptr, 270.0f, 0, SDL_FLIP_NONE, 0.75);
         }
         else {
-            mTexture[1].Render(GetX(), GetY(), GetRenderer());
+            mTexture[1].Render(GetX(), GetY(), GetRenderer(), nullptr, 0.0f, 0, SDL_FLIP_NONE, 0.75);
         }
     }
     else if (mVelX == 0) {
-            mTexture[0].Render(GetX(), GetY(), GetRenderer(), nullptr, 0.0f);
+            mTexture[0].Render(GetX(), GetY(), GetRenderer(), nullptr, 0.0f, 0, SDL_FLIP_NONE, 0.75);
     }
 }
 
@@ -173,18 +173,18 @@ bool Player::CheckCollision(SDL_Rect& b){
     leftB = b.x;
     rightB = b.x + b.w;
 
-    if (bottomA <= topB + 16){
+    if (bottomA <= topB + 12){
         return true;
     }
     
-    if (bottomB <= topA + 16){
+    if (bottomB <= topA + 12){
         return true;
     }
-    if (leftA >= rightB - 16){
+    if (leftA >= rightB - 12){
         return true;
     }
     
-    if (rightA <= leftB + 16){
+    if (rightA <= leftB + 12){
         return true;
     }
     
